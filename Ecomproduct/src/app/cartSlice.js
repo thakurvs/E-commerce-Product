@@ -1,9 +1,8 @@
 import {createSlice} from '@reduxjs/toolkit'
-import { nanoid } from '@reduxjs/toolkit';
 
 const initialState = {
     items : [],
-    totalPrice : 0,
+    totalPrice : 0, 
 }
 
 const cartSlice = createSlice({
@@ -16,9 +15,9 @@ const cartSlice = createSlice({
 
             if(existingProduct){
                 existingProduct.count += 1
-                state.items.push({...product, id: nanoid()})
+                state.items.push({...product, id: product.id})
             } else {
-                state.items.push({...product, count : 1, id: nanoid()});
+                state.items.push({...product, count : 1, id: product.id});
             }
 
             state.totalPrice  += product.price;

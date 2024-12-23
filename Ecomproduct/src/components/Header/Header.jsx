@@ -8,7 +8,9 @@ import { useSelector } from 'react-redux';
 
 function Header() {
 
-    const count = JSON.parse(localStorage.getItem('cart')) || 0;
+    // const count = JSON.parse(localStorage.getItem('cart')) || 0;
+    const cart = useSelector(state => state.cart);
+    console.log(cart.cart);
 
   return (
     <header className="shadow-lg sticky z-50 top-0 bg-white py-4">
@@ -29,7 +31,7 @@ function Header() {
                 className="text-gray-800 hover:text-blue-600 cursor-pointer"
             />
             <span className="absolute top-0 right-0 text-xs bg-red-500 text-white rounded-full px-1.5 py-0.5">
-              {count.length}
+              {cart.items.length}
             </span>
             </Link>
         </div>

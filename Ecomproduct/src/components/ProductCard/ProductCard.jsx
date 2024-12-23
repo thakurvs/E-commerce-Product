@@ -6,11 +6,11 @@ import {showToast} from '../../app/toastSlice'
 import { useSelector } from 'react-redux'
 import { nanoid } from '@reduxjs/toolkit'
 
-function ProductCard({id, title, price, description, images, category}) {
+function ProductCard({id, title, price, description, image, category}) {
 
     const dispatch = useDispatch();
     const handleAddToCart = () => {
-        const product = {id:nanoid(), title, price, description, images};
+        const product = {id, title, price, description, image};
         dispatch(addToCart(product));
 
         const cartItems = JSON.parse(localStorage.getItem('cart')) || [];
@@ -32,8 +32,8 @@ function ProductCard({id, title, price, description, images, category}) {
   return (
     <div className="w-full text-center border-[1px] border-[#eaeaea]">
         <Link to={`/productdetails/${id}`}>
-        {images && images.length > 0 ? (
-          <img key={id} src={images[0]} alt={title} />
+        {image && image.length > 0 ? (
+          <img key={id} src={image} alt={title} />
         ) : (
           // If no product images, use category image as fallback
           <img src={category.image} alt="Category fallback image" />

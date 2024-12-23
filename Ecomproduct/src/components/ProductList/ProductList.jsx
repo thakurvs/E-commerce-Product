@@ -13,7 +13,8 @@ function ProductList() {
 
 
     useEffect(() => {
-        fetch('https://api.escuelajs.co/api/v1/products')
+        // fetch('https://api.escuelajs.co/api/v1/products')
+        fetch('https://fakestoreapi.com/products')
         .then(response => response.json())
         .then(data => setProducts(data))
         .catch(error => console.error('Error:', error))

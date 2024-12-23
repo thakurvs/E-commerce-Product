@@ -10,6 +10,9 @@ header {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    background-color: #fff;
+    padding-top: 20px;
+    padding-bottom: 20px;
 
     .main-title {
       text-decoration: none;
@@ -27,3 +30,30 @@ header {
     text-decoration: none;
     color: #fff;
   }
+
+  
+  header {
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  button:hover,
+  button:focus {
+    transform: scale(1.05);
+    background-color: #1d72b8;
+  }
+  
+  .cart-icon {
+    position: relative;
+  }
+  
+  .cart-icon span {
+    position: absolute;
+    top: -5px;
+    right: -5px;
+    background-color: red;
+    color: white;
+    font-size: 12px;
+    padding: 2px 5px;
+    border-radius: 50%;
+  }
+  
