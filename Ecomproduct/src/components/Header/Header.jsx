@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useState} from 'react'
 import EcomImage from "../../assets/EcomImage.png"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faShoppingCart } from '@fortawesome/free-solid-svg-icons';
@@ -7,10 +7,16 @@ import { Link } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 
 function Header() {
-
     // const count = JSON.parse(localStorage.getItem('cart')) || 0;
-    const cart = useSelector(state => state.cart);
-    console.log(cart.cart);
+    // const [itemsCount, setItemsCount] = useState(0);
+    const cartItems = useSelector(state => state.cart.items);
+    console.log(cartItems);
+    // const totalCount = cart.reduce((acc, item) => acc + item.count, 0);
+    // setItemsCount(totalCount);
+    const totalCount = cartItems.reduce((acc, item) => {
+      const count = Number(item.count) || 0;
+      return acc + count;
+    }, 0);
 
   return (
     <header className="shadow-lg sticky z-50 top-0 bg-white py-4">
@@ -31,7 +37,7 @@ function Header() {
                 className="text-gray-800 hover:text-blue-600 cursor-pointer"
             />
             <span className="absolute top-0 right-0 text-xs bg-red-500 text-white rounded-full px-1.5 py-0.5">
-              {cart.items.length}
+              {totalCount}
             </span>
             </Link>
         </div>

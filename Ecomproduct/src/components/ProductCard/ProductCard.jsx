@@ -13,12 +13,12 @@ function ProductCard({id, title, price, description, image, category}) {
         const product = {id, title, price, description, image};
         dispatch(addToCart(product));
 
-        const cartItems = JSON.parse(localStorage.getItem('cart')) || [];
-        let totalPrice = JSON.parse(localStorage.getItem('totalPrice')) || 0;
-        totalPrice += price;
-        cartItems.push(product);
-        localStorage.setItem('cart', JSON.stringify(cartItems));
-        localStorage.setItem('totalPrice', JSON.stringify(totalPrice));
+        // const cartItems = JSON.parse(localStorage.getItem('cart')) || [];
+        // let totalPrice = JSON.parse(localStorage.getItem('totalPrice')) || 0;
+        // totalPrice += price;
+        // cartItems.push(product);
+        // localStorage.setItem('cart', JSON.stringify(cartItems));
+        // localStorage.setItem('totalPrice', JSON.stringify(totalPrice));
 
         dispatch(showToast({message: 'Item added to cart!', type : 'success'}));
     }

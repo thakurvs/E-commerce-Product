@@ -1,7 +1,6 @@
 import React, {useState, useEffect} from 'react'
-import { useSelector } from 'react-redux'
 import { removeFromCart } from '../../app/cartSlice'
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 export default function ShoppingCart() {
   
@@ -12,13 +11,13 @@ export default function ShoppingCart() {
 //     setCartItems(storedCartItems);
 //   }, [])
 
-  const dispatch = useDispatch();
+//   const dispatch = useDispatch();
+  const CartItemsCount = useSelector((state) => state.cart.items);
+  const totalCount = CartItemsCount.reduce((acc, item) => acc + item.count, 0);
 
   const [cartItems, setCartItems] = useState(JSON.parse(localStorage.getItem('cart')) || []);
   const [totalPrice, setTotalPrice] = useState(JSON.parse(localStorage.getItem('totalPrice')) || 0);
-  const [itemCount, setItemCount] = useState(cartItems.reduce((acc, item) => acc + item.count, 0));
   
-
   const handleRemoveFromCart = (id) => {
 
     const updatedCartItems = cartItems.filter(item => item.id !== id);
@@ -27,12 +26,12 @@ export default function ShoppingCart() {
     console.log(totalPrice);
     const updatedTotalPrice = totalPrice - (removedProduct.price * removedProduct.count);
 
-    localStorage.setItem('cart', JSON.stringify(updatedCartItems));
+    // localStorage.setItem('cart', JSON.stringify(updatedCartItems));
     localStorage.setItem('totalPrice', JSON.stringify(updatedTotalPrice));
     
     setCartItems(updatedCartItems);
     setTotalPrice(updatedTotalPrice);
-    setItemCount(updatedCartItems.reduce((acc, item) => acc + item.count, 0));
+    // setItemCount(updatedCartItems.reduce((acc, item) => acc + item.count, 0));
 
     // dispatch(removeFromCart(id));
   };
@@ -41,16 +40,16 @@ export default function ShoppingCart() {
     <div className='w-full mx-auto sm:px-1 lg:px-1 py-1 relative'>
         <title>Shopping Cart</title>
         <div className='w-full mb-2 mt-2'>
-            <h1 className="text-3xl font-bold text-gray-900">{`SubTotal (${itemCount} items): ₹${totalPrice}`}</h1>
+            <h1 className="text-3xl font-bold text-gray-900">{`SubTotal (${totalCount} items): ₹${totalPrice}`}</h1>
             </div>
-        {cartItems.length === 0 ? (
+        {CartItemsCount.length === 0 ? (
             <p>Cart is empty</p>
         ) : (
             <div className='product-list'>
                 {cartItems.map((product, index) => (
                     <div key={product.id} className='w-full p-2 sm:w-1/2 lg:w-1/4 product-row'>
                         <div className="product-image">
-                            <img src= {product.images[0]} alt={product.title} />
+                            <img src= {product.image} alt={product.title} />
                         </div>
                         <div className="product-details">
                             <div className="product-title">{product.title}</div>
