@@ -11,6 +11,7 @@ import Toast from '../Toast/Toast';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
 import 'react-lazy-load-image-component/src/effects/blur.css';
 import Loader from 'react-spinners/PropagateLoader';
+import './ProductDetails.scss'
 
 function ProductDetails() {
 
@@ -55,8 +56,8 @@ function ProductDetails() {
   return (
     <div className="container m-auto px-6 text-gray-600 md:px-12 xl:px-6">
          {toast.message && <Toast message={toast.message} type={toast.type} />}
-        <div className="space-y-6 md:space-y-0 md:flex md:gap-6 lg:items-center lg:gap-12 mb-3 mt-3">
-            <div className="md:w-5/12 lg:w-5/12 relative">
+        <div className="product-detailsNew space-y-6 md:space-y-0 md:flex md:gap-6 lg:items-center lg:gap-12 mb-3 mt-3">
+            <div className="image-container md:w-5/12 lg:w-5/12 relative">
                 {product.image ? (
                     <>
                     {isLoading && (

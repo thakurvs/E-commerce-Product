@@ -9,10 +9,11 @@ import ProductDetails from './components/ProductDetails/ProductDetails.jsx'
 import { Provider } from 'react-redux'
 import store from './app/store.js'
 import ShoppingCart from './components/ShoppingCart/ShoppingCart.jsx'
+import ErrorPage from './components/error-page/ErrorPage.jsx'
 
 const router = createBrowserRouter(
   createRoutesFromElements(
-    <Route path='/' element={<App />} >
+    <Route path='/' element={<App />} errorElement={<ErrorPage />} >
       <Route path='/' element={<ProductList />} />
       <Route path='/productdetails/:id' element={<ProductDetails />} />
       <Route path='/shoppingcart' element={<ShoppingCart />} />

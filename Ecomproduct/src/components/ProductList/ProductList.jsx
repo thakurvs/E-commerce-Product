@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import ProductCard from '../ProductCard/ProductCard';
 import Toast from '../Toast/Toast';
 import { useSelector } from 'react-redux';
+import Loader from '../Loader';
 
 function ProductList() {
 
@@ -41,17 +42,8 @@ function ProductList() {
 
     if (loading) {
         return (
-            <div className="w-full flex justify-center items-center text-center min-h-screen">
-               <div className='w-full mx-auto sm:px-1 lg:px-1 py-1 relative'>
-                    <div className="flex flex-wrap">
-                        <div className="p-2 w-full">
-                            <h1 className="text-2xl font-bold hover:text-gray-500">
-                                Loading...
-                            </h1>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            // 
+            <Loader text="Loading..."/>
         );
     }
 

@@ -1,15 +1,13 @@
 import React, {useState} from 'react'
 import { removeFromCart } from '../../app/cartSlice';
 import { useDispatch, useSelector } from 'react-redux';
-import './ShoppingCart.scss';
-import { clearCart } from '../../app/cartSlice';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
 import 'react-lazy-load-image-component/src/effects/blur.css';
 import Loader from 'react-spinners/PropagateLoader';
+import './ShoppingCart.scss'
 
 export default function ShoppingCart() {
 
-//   const dispatch = useDispatch();
   const totalPrice = useSelector((state) => state.cart.totalPrice)
   const cartItems = useSelector((state) => state.cart.items);
   const totalCount = cartItems.reduce((acc, item) => acc + item.count, 0);
@@ -20,11 +18,6 @@ export default function ShoppingCart() {
   const handleRemoveFromCart = (id) => {
     dispatch(removeFromCart(id))
   };
-
-  const handleClearCart = () => {
-    dispatch(clearCart());
-  }
-
 
   return (
     <div className='w-full mx-auto sm:px-1 lg:px-1 py-1 relative'>
@@ -95,85 +88,6 @@ export default function ShoppingCart() {
                     </div>
                 ))}
             </div>
-            // <div className="product-list mt-2">
-            //     {cartItems.map((product, index) => (
-            //         <div
-            //         key={product.id}
-            //         className="w-full p-4 sm:w-1/2 lg:w-1/4 product-row border-b border-gray-200"
-            //         >
-            //         <div className="flex gap-4">
-            //             {/* Product Image */}
-            //             <div className="product-image flex-shrink-0">
-            //             <img
-            //                 src={product.image}
-            //                 alt={product.title}
-            //                 className="w-20 h-20 rounded"
-            //             />
-            //             </div>
-
-            //             {/* Product Details */}
-            //             <div className="product-details flex-grow">
-            //             <div className="product-title font-semibold text-lg">
-            //                 {product.title}
-            //             </div>
-            //             <div className="product-meta text-sm text-gray-500">
-            //                 Eligible for FREE Shipping
-            //             </div>
-            //             <div className="product-price mt-1">
-            //                 <span className="font-semibold text-xl text-red-600">
-            //                 ₹{product.price}
-            //                 </span>
-            //                 <span
-            //                 className="text-gray-500 ml-2 text-sm line-through"
-            //                 style={{ color: "#888", textDecoration: "line-through" }}
-            //                 >
-            //                 ₹{product.originalPrice}
-            //                 </span>
-            //             </div>
-            //             <div className="product-meta text-sm text-green-600 mt-1">
-            //                 In stock
-            //             </div>
-
-            //             {/* Quantity & Actions */}
-            //             <div className="flex items-center mt-3 gap-2">
-            //                 {/* Decrease Quantity */}
-            //                 <button
-            //                 onClick={() => handleDecreaseQuantity(product.id)}
-            //                 className="p-2 border rounded text-gray-700 hover:bg-gray-100"
-            //                 >
-            //                 -
-            //                 </button>
-
-            //                 {/* Quantity Display */}
-            //                 <span className="p-2 border rounded bg-gray-100 w-8 text-center">
-            //                 {product.count}
-            //                 </span>
-
-            //                 {/* Increase Quantity */}
-            //                 <button
-            //                 onClick={() => handleIncreaseQuantity(product.id)}
-            //                 className="p-2 border rounded text-gray-700 hover:bg-gray-100"
-            //                 >
-            //                 +
-            //                 </button>
-            //             </div>
-
-            //             {/* Remove Button */}
-            //             <button
-            //                 onClick={() => handleRemoveFromCart(product.id)}
-            //                 className="text-red-600 mt-2 hover:underline"
-            //             >
-            //                 Remove
-            //             </button>
-            //             </div>
-            //         </div>
-
-            //         {/* Horizontal Divider */}
-            //         <hr className="mt-4" />
-            //         </div>
-            //     ))}
-            // </div>
-
         )}
         
     </div>

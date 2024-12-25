@@ -1,57 +1,109 @@
 header {
-    background: var(--primary-color);
-    color: #fff;
-    padding: 0.5rem 0.5rem;
-    letter-spacing: 1px;
+  background: var(--primary-color);
+  color: #fff;
+  padding: 0.5rem 0.5rem;
+  letter-spacing: 1px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
 
 .main-header {
-    margin: 0 auto;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background-color: #fff;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #fff;
+  flex-wrap: wrap;
 
-    .main-title {
-      text-decoration: none;
-      color: #000;
-    }
+  .main-title {
+    text-decoration: none;
+    color: #000;
+    text-align: center;
+  }
 }
 
 .EcomImage {
-    object-fit: cover;
-    height: 65px;
-    width: 120px;
+  object-fit: cover;
+  height: 65px;
+  width: 120px;
+  transition: height 0.3s ease, width 0.3s ease;
 }
 
 .main-title {
-    text-decoration: none;
-    color: #fff;
+  text-decoration: none;
+  color: #fff;
+}
+
+/* Adjust font sizes, spacing, and image size for different screen sizes */
+@media (max-width: 1024px) {
+  .main-header {
+      flex-direction: column; /* Stack items vertically */
+      justify-content: center;
   }
 
-  
+  .main-title {
+      margin-top: 0.5rem;
+      font-size: 1.25rem;
+  }
+
+  .EcomImage {
+      height: 55px;
+      width: 100px;
+  }
+}
+
+@media (max-width: 768px) {
   header {
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      padding: 0.5rem;
   }
-  
-  button:hover,
-  button:focus {
-    transform: scale(1.05);
-    background-color: #1d72b8;
+
+  .main-header {
+      padding: 0.5rem;
   }
-  
+
+  .main-title {
+      font-size: 1rem;
+  }
+
+  .EcomImage {
+      height: 50px;
+      width: 80px;
+  }
+}
+
+// button:hover,
+// button:focus {
+//   transform: scale(1.05);
+//   background-color: #1d72b8;
+// }
+
+.cart-icon {
+  position: relative;
+}
+
+.cart-icon span {
+  position: absolute;
+  top: -5px;
+  right: -5px;
+  background-color: red;
+  color: white;
+  font-size: 12px;
+  padding: 2px 5px;
+  border-radius: 50%;
+}
+
+/* Add space between items for smaller screens */
+@media (max-width: 640px) {
+  .main-header {
+      padding: 0.5rem 0;
+      text-align: center;
+  }
+
   .cart-icon {
-    position: relative;
+      margin-top: 0.5rem;
   }
-  
+
   .cart-icon span {
-    position: absolute;
-    top: -5px;
-    right: -5px;
-    background-color: red;
-    color: white;
-    font-size: 12px;
-    padding: 2px 5px;
-    border-radius: 50%;
+      font-size: 10px;
+      padding: 1px 4px;
   }
-  
+}
