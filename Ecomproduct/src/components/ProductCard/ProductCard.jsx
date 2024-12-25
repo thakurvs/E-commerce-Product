@@ -1,13 +1,16 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
 import {useDispatch} from 'react-redux'
 import { addToCart } from '../../app/cartSlice'
 import {showToast} from '../../app/toastSlice'
-import { useSelector } from 'react-redux'
 import { nanoid } from '@reduxjs/toolkit'
+import { LazyLoadImage } from 'react-lazy-load-image-component';
+import 'react-lazy-load-image-component/src/effects/blur.css';
+import Loader from 'react-spinners/PropagateLoader';
 
 function ProductCard({id, title, price, description, image, category}) {
 
+     const [isLoading, setIsLoading] = useState(true);
     const dispatch = useDispatch();
     const handleAddToCart = () => {
         const product = {id, title, price, description, image};
@@ -32,12 +35,32 @@ function ProductCard({id, title, price, description, image, category}) {
   return (
     <div className="w-full text-center border-[1px] border-[#eaeaea]">
         <Link to={`/productdetails/${id}`}>
-        {image && image.length > 0 ? (
-          <img key={id} src={image} alt={title} />
-        ) : (
-          // If no product images, use category image as fallback
-          <img src={category.image} alt="Category fallback image" />
-        )}
+            {image?.length > 0 ? (
+                <div className="relative">
+                    {isLoading && (
+                    <div className="absolute inset-0 flex items-center justify-center bg-gray-100">
+                        <Loader color="#4A90E2" size={15} /> {/* Loader animation */}
+                    </div>
+                    )}
+                    <LazyLoadImage
+                    alt={title}
+                    effect="blur"
+                    className={`object-cover w-full transition-opacity duration-500 ${
+                        isLoading ? 'opacity-0' : 'opacity-100'
+                    }`}
+                    src={image}
+                    style={{
+                        objectFit: 'cover',
+                    }}
+                    afterLoad={() => setIsLoading(false)} // Hide loader after image is loaded
+                    />
+                </div>
+                ) : (
+                <div className="w-full h-full flex items-center justify-center bg-gray-100 text-gray-500">
+                    No Image
+                </div>
+            )}
+
         </Link>
         <div className="px-5 pb-5">
             <Link to={`/productdetails/${id}`}>

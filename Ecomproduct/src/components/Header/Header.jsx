@@ -19,7 +19,7 @@ function Header() {
     }, 0);
 
   return (
-    <header className="shadow-lg sticky z-50 top-0 bg-white py-4">
+    <header className="shadow-lg sticky z-50 top-0 bg-white">
         <div className="w-full flex flex-wrap justify-between items-center mx-auto max-w-screen-2xl main-header">
         <Link to="/" className="flex items-center">
             <img src={EcomImage} alt="EcomImage" className="EcomImage w-28 h-auto" />

@@ -1,69 +1,179 @@
-import React, {useState, useEffect} from 'react'
-import { removeFromCart } from '../../app/cartSlice'
+import React, {useState} from 'react'
+import { removeFromCart } from '../../app/cartSlice';
 import { useDispatch, useSelector } from 'react-redux';
+import './ShoppingCart.scss';
+import { clearCart } from '../../app/cartSlice';
+import { LazyLoadImage } from 'react-lazy-load-image-component';
+import 'react-lazy-load-image-component/src/effects/blur.css';
+import Loader from 'react-spinners/PropagateLoader';
 
 export default function ShoppingCart() {
-  
-//   const [cartItems, setCartItems] = useState([]);
-
-//   useEffect(() => {
-//     const storedCartItems = JSON.parse(localStorage.getItem('cart')) || [];
-//     setCartItems(storedCartItems);
-//   }, [])
 
 //   const dispatch = useDispatch();
-  const CartItemsCount = useSelector((state) => state.cart.items);
-  const totalCount = CartItemsCount.reduce((acc, item) => acc + item.count, 0);
-
-  const [cartItems, setCartItems] = useState(JSON.parse(localStorage.getItem('cart')) || []);
-  const [totalPrice, setTotalPrice] = useState(JSON.parse(localStorage.getItem('totalPrice')) || 0);
+  const totalPrice = useSelector((state) => state.cart.totalPrice)
+  const cartItems = useSelector((state) => state.cart.items);
+  const totalCount = cartItems.reduce((acc, item) => acc + item.count, 0);
+  const roundtotalPrice = totalPrice.toFixed(2)
+  const dispatch = useDispatch();
+  const [isLoading, setIsLoading] = useState(true);
   
   const handleRemoveFromCart = (id) => {
-
-    const updatedCartItems = cartItems.filter(item => item.id !== id);
-    const removedProduct = cartItems.find((product) => product.id === id);
-    console.log(removedProduct);
-    console.log(totalPrice);
-    const updatedTotalPrice = totalPrice - (removedProduct.price * removedProduct.count);
-
-    // localStorage.setItem('cart', JSON.stringify(updatedCartItems));
-    localStorage.setItem('totalPrice', JSON.stringify(updatedTotalPrice));
-    
-    setCartItems(updatedCartItems);
-    setTotalPrice(updatedTotalPrice);
-    // setItemCount(updatedCartItems.reduce((acc, item) => acc + item.count, 0));
-
-    // dispatch(removeFromCart(id));
+    dispatch(removeFromCart(id))
   };
+
+  const handleClearCart = () => {
+    dispatch(clearCart());
+  }
+
 
   return (
     <div className='w-full mx-auto sm:px-1 lg:px-1 py-1 relative'>
-        <title>Shopping Cart</title>
-        <div className='w-full mb-2 mt-2'>
-            <h1 className="text-3xl font-bold text-gray-900">{`SubTotal (${totalCount} items): ₹${totalPrice}`}</h1>
-            </div>
-        {CartItemsCount.length === 0 ? (
+        <div className='w-full mb-2 mt-2 flex flex-row justify-evenly' style={{justifyContent: 'space-between'}}>
+            <h1 className='text-3xl font-bold text-gray-900 shoppingCart'>Shopping Cart</h1>
+            <h1 className="text-3xl font-bold text-gray-900 shoppingTotal">{`SubTotal (${totalCount} items): ₹${roundtotalPrice}`}</h1>
+        </div>
+        <hr></hr>
+        {cartItems.length === 0 ? (
             <p>Cart is empty</p>
         ) : (
-            <div className='product-list'>
+            <div className='product-list mt-2'>
                 {cartItems.map((product, index) => (
                     <div key={product.id} className='w-full p-2 sm:w-1/2 lg:w-1/4 product-row'>
                         <div className="product-image">
-                            <img src= {product.image} alt={product.title} />
+                        {product.image ? (
+                            <>
+                            {isLoading && (
+                                <div className="absolute inset-0 flex items-center justify-center bg-gray-100">
+                                <Loader color="#4A90E2" size={15} /> {/* Loader animation */}
+                                </div>
+                            )}
+                            <LazyLoadImage
+                                alt={product.title}
+                                effect="blur"
+                                className={`object-cover w-full ${isLoading ? 'opacity-0' : 'opacity-100'} transition-opacity duration-500`}
+                                src={product.image}
+                                style={{
+                                // aspectRatio: "600/400",
+                                objectFit: "cover",
+                                }}
+                                afterLoad={() => setIsLoading(false)} // Hide loader after image is loaded
+                            />
+                            </>
+                        ) : (
+                            <div className="absolute inset-0 flex items-center justify-center bg-gray-100">
+                            <Loader color="#4A90E2" size={15} />
+                            </div>
+                        )}
                         </div>
                         <div className="product-details">
-                            <div className="product-title">{product.title}</div>
-                            {/* <div className="product-meta">Pack of 50, Blue, Unisex</div> */}
-                            <div className="product-price">₹{product.price}<span style={{ color: '#888', textDecoration: 'line-through' }}>₹{product.price}</span></div>
-                            {/* <div className="product-meta">50% Off | #1 Best Seller in Medical Procedure Masks</div> */}
+                            <div className='flex flex-row'>
+                                <div className="product-title">{product.title}</div>
+                                <div className="product-price"><span style={{ color: '#888', textDecoration: 'line-through' }}>₹{product.price}</span>₹{product.price}</div>
+                            </div>
+                            <div class="best-seller-badge">#1 Best Seller</div>
+                            <div className="product-meta">in stock</div>
+                            <div className="product-elgible">Eligible for FREE Shipping</div>
+                            <div class="return-policy">
+                                <span class="return-icon">↩️</span>
+                                <span>
+                                    <strong>7 days</strong> return available
+                                </span>
+                            </div>
+                            {/* <div className="product-discount">50% Off | #1 Best Seller in {product.category}</div> */}
                             <p>Quantity: {product.count}</p>
                             <div className="product-actions">
-                            <button className="button" onClick={() => handleRemoveFromCart(product.id)}>Remove Item</button>
+                                <button className="button" onClick={() => handleRemoveFromCart(product.id)}>Remove Item</button>
+                                <span>|</span>
+                                <span>Save for later</span>
+                                <span>|</span>
+                                <span>See more like this</span>
+                                <span>|</span>
+                                <span>Share</span>
                             </div>
                         </div>
+                        <hr className="mt-4" />
                     </div>
                 ))}
             </div>
+            // <div className="product-list mt-2">
+            //     {cartItems.map((product, index) => (
+            //         <div
+            //         key={product.id}
+            //         className="w-full p-4 sm:w-1/2 lg:w-1/4 product-row border-b border-gray-200"
+            //         >
+            //         <div className="flex gap-4">
+            //             {/* Product Image */}
+            //             <div className="product-image flex-shrink-0">
+            //             <img
+            //                 src={product.image}
+            //                 alt={product.title}
+            //                 className="w-20 h-20 rounded"
+            //             />
+            //             </div>
+
+            //             {/* Product Details */}
+            //             <div className="product-details flex-grow">
+            //             <div className="product-title font-semibold text-lg">
+            //                 {product.title}
+            //             </div>
+            //             <div className="product-meta text-sm text-gray-500">
+            //                 Eligible for FREE Shipping
+            //             </div>
+            //             <div className="product-price mt-1">
+            //                 <span className="font-semibold text-xl text-red-600">
+            //                 ₹{product.price}
+            //                 </span>
+            //                 <span
+            //                 className="text-gray-500 ml-2 text-sm line-through"
+            //                 style={{ color: "#888", textDecoration: "line-through" }}
+            //                 >
+            //                 ₹{product.originalPrice}
+            //                 </span>
+            //             </div>
+            //             <div className="product-meta text-sm text-green-600 mt-1">
+            //                 In stock
+            //             </div>
+
+            //             {/* Quantity & Actions */}
+            //             <div className="flex items-center mt-3 gap-2">
+            //                 {/* Decrease Quantity */}
+            //                 <button
+            //                 onClick={() => handleDecreaseQuantity(product.id)}
+            //                 className="p-2 border rounded text-gray-700 hover:bg-gray-100"
+            //                 >
+            //                 -
+            //                 </button>
+
+            //                 {/* Quantity Display */}
+            //                 <span className="p-2 border rounded bg-gray-100 w-8 text-center">
+            //                 {product.count}
+            //                 </span>
+
+            //                 {/* Increase Quantity */}
+            //                 <button
+            //                 onClick={() => handleIncreaseQuantity(product.id)}
+            //                 className="p-2 border rounded text-gray-700 hover:bg-gray-100"
+            //                 >
+            //                 +
+            //                 </button>
+            //             </div>
+
+            //             {/* Remove Button */}
+            //             <button
+            //                 onClick={() => handleRemoveFromCart(product.id)}
+            //                 className="text-red-600 mt-2 hover:underline"
+            //             >
+            //                 Remove
+            //             </button>
+            //             </div>
+            //         </div>
+
+            //         {/* Horizontal Divider */}
+            //         <hr className="mt-4" />
+            //         </div>
+            //     ))}
+            // </div>
+
         )}
         
     </div>

@@ -52,17 +52,6 @@ function ProductDetails() {
     }
 
 
-    const sliderSettings = {
-        dots: true,
-        infinite: true,
-        speed: 500,
-        slidesToShow: 1,
-        slidesToScroll: 1,
-        autoplay: true,
-        autoplaySpeed: 2000, 
-        fade: true, 
-    }
-
   return (
     <div className="container m-auto px-6 text-gray-600 md:px-12 xl:px-6">
          {toast.message && <Toast message={toast.message} type={toast.type} />}
